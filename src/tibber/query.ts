@@ -1,7 +1,7 @@
 import { TibberPriceResolution } from '../config/types';
 
 export const PRICE_QUERY = `
-  query GetPriceInfo($resolution: PriceRateUnit!) {
+  query GetPriceInfo($resolution: PriceInfoResolution) {
     viewer {
       homes {
         id

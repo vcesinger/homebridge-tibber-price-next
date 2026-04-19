@@ -32,9 +32,19 @@ Damit kann dieselbe Berechnungslogik sowohl mit Stunden- als auch mit Viertelstu
 
 Standardmaessig ist `QUARTER_HOURLY` konfiguriert.
 
+Laut offizieller Tibber-Referenz laeuft das ueber `Subscription.priceInfo(resolution: QUARTER_HOURLY)`.
+Die Referenz beschreibt ausserdem:
+
+- `PriceInfoResolution`: `HOURLY`, `QUARTER_HOURLY`
+- `priceInfo.today` und `priceInfo.tomorrow` als aktuelle Tageslisten
+- `Subscription.priceInfoRange` als Nachfolger von `priceInfo.range`
+
+Quelle:
+- [Tibber GraphQL Schema Reference](https://developer.tibber.com/docs/reference)
+- Direkt geladene Referenzdatei: [reference.md](https://developer.tibber.com/api/reference.md)
+
 ## Offene Punkte
 
 - die exakte Tibber-GraphQL-Antwort sollte einmal live gegen einen echten Token verifiziert werden
 - fuer Publishing fehlen noch CI, Tests und Paket-Metadaten
 - optional kann spaeter ein eigener Renderer statt QuickChart gebaut werden
-
