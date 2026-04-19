@@ -17,13 +17,13 @@
     "README.md",
     "LICENSE"
   ],
-  "homepage": "https://github.com/volkercesinger/homebridge-tibber-price-next#readme",
+  "homepage": "https://github.com/vcesinger/homebridge-tibber-price-next#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/volkercesinger/homebridge-tibber-price-next.git"
+    "url": "git+https://github.com/vcesinger/homebridge-tibber-price-next.git"
   },
   "bugs": {
-    "url": "https://github.com/volkercesinger/homebridge-tibber-price-next/issues"
+    "url": "https://github.com/vcesinger/homebridge-tibber-price-next/issues"
   },
   "engines": {
     "node": ">=20",

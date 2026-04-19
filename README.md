@@ -27,7 +27,7 @@ Solange wir hier keinen Paketmanager in der Umgebung haben, wird `dist/` bewusst
 Lokale Entwicklung oder manueller Test in Homebridge:
 
 ```bash
-git clone https://github.com/volkercesinger/homebridge-tibber-price-next.git
+git clone https://github.com/vcesinger/homebridge-tibber-price-next.git
 cd homebridge-tibber-price-next
 npm install
 ```
