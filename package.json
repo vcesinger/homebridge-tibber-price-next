@@ -3,6 +3,7 @@
   "displayName": "Homebridge Tibber Price Next",
   "version": "0.1.0",
   "description": "Homebridge plugin for Tibber prices with quarter-hourly and hourly slot support",
+  "author": "Volker Cesinger",
   "license": "MIT",
   "type": "commonjs",
   "main": "dist/index.js",

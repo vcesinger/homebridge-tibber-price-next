@@ -4,7 +4,7 @@ class AccessoryBase {
     this.accessory = accessory;
 
     this.accessory.getService(this.platform.Service.AccessoryInformation)
-      .setCharacteristic(this.platform.Characteristic.Manufacturer, 'volkercesinger/codex-reboot')
+      .setCharacteristic(this.platform.Characteristic.Manufacturer, 'Volker Cesinger')
       .setCharacteristic(this.platform.Characteristic.Model, 'Tibber Price Next')
       .setCharacteristic(this.platform.Characteristic.SerialNumber, '0.1.0');
   }
@@ -26,4 +26,3 @@ class AccessoryBase {
 module.exports = {
   AccessoryBase,
 };
-
