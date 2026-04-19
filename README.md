@@ -2,6 +2,8 @@
 
 Neuaufbau des bestehenden Plugins mit einer Architektur, die nicht mehr davon ausgeht, dass Tibber nur Stundenpreise liefert.
 
+Dieses Repo ist auf die aktuelle Tibber-GraphQL-Antwort fuer `QUARTER_HOURLY` abgeglichen und fuer echte Homebridge-Installation vorbereitet.
+
 ## Ziele
 
 - gleiche Kernfunktionen wie das Altprojekt abbilden
@@ -19,6 +21,25 @@ Das Repository ist als lauffaehiges Plugin vorbereitet:
 - `node --test test/*.test.cjs` laeuft lokal gruen fuer die Kernberechnungen
 
 Solange wir hier keinen Paketmanager in der Umgebung haben, wird `dist/` bewusst mitversioniert.
+
+## Installation
+
+Lokale Entwicklung oder manueller Test in Homebridge:
+
+```bash
+git clone https://github.com/volkercesinger/homebridge-tibber-price-next.git
+cd homebridge-tibber-price-next
+npm install
+```
+
+Falls du das Plugin lokal in eine bestehende Homebridge-Installation linken willst:
+
+```bash
+npm link
+homebridge -D
+```
+
+Fuer eine spaetere Veroeffentlichung nach npm ist die Runtime bereits unter `dist/` enthalten.
 
 ## Enthaltene Funktionen
 
@@ -69,8 +90,30 @@ Quelle:
 }
 ```
 
+Mit fest gesetzter `homeId`:
+
+```json
+{
+  "platform": "HomebridgeTibberPriceNext",
+  "accessToken": "TIBBER_TOKEN",
+  "homeId": "4497ca6f-38d2-46c4-a83f-bf33c47e6c89",
+  "priceResolution": "QUARTER_HOURLY",
+  "priceMode": "TOTAL"
+}
+```
+
+## Verifiziert
+
+Gegen deine echte Tibber-Antwort ist bestaetigt:
+
+- `priceInfo(resolution: QUARTER_HOURLY)` liefert 15-Minuten-Slots
+- `today` enthaelt bei dir Viertelstundenwerte ueber den ganzen Tag
+- `tomorrow` kann leer sein und wird vom Client toleriert
+- `current` passt zum gleichen Slot-Modell wie `today`
+
+Damit ist die Grundannahme des Reboots technisch bestaetigt.
+
 ## Offene Punkte
 
-- die exakte Tibber-GraphQL-Antwort sollte einmal live gegen einen echten Token verifiziert werden
-- fuer Publishing fehlen noch CI, erweiterte Integrationstests und Paket-Metadaten
+- fuer Publishing fehlen noch CI und erweiterte Integrationstests
 - optional kann spaeter ein eigener Renderer statt QuickChart gebaut werden

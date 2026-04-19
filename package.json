@@ -2,16 +2,28 @@
   "name": "homebridge-tibber-price-next",
   "displayName": "Homebridge Tibber Price Next",
   "version": "0.1.0",
-  "description": "Neuaufbau eines Homebridge-Plugins fuer Tibber-Preise mit flexiblen Zeitslots",
+  "description": "Homebridge plugin for Tibber prices with quarter-hourly and hourly slot support",
   "license": "MIT",
   "type": "commonjs",
   "main": "dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
   "files": [
     "dist",
     "src",
     "config.schema.json",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
+  "homepage": "https://github.com/volkercesinger/homebridge-tibber-price-next#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/volkercesinger/homebridge-tibber-price-next.git"
+  },
+  "bugs": {
+    "url": "https://github.com/volkercesinger/homebridge-tibber-price-next/issues"
+  },
   "engines": {
     "node": ">=20",
     "homebridge": ">=1.8.0"
@@ -27,7 +39,7 @@
     "energy",
     "dynamic-pricing"
   ],
-  "dependencies": {
+  "peerDependencies": {
     "homebridge": "^1.8.0"
   },
   "devDependencies": {
