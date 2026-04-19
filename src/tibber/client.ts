@@ -1,9 +1,9 @@
 import path from 'node:path';
 import { Logger } from 'homebridge';
-import { PluginConfig } from '../config/types';
-import { findSlotForInstant, normalizeSlots, PriceSlot, PriceTimeline, ValuedPriceSlot } from '../domain/price-slot';
-import { PriceCacheStore } from './cache-store';
-import { buildVariables, PRICE_QUERY } from './query';
+import { PluginConfig } from '../config/types.ts';
+import { findSlotForInstant, normalizeSlots, PriceSlot, PriceTimeline, ValuedPriceSlot } from '../domain/price-slot.ts';
+import { PriceCacheStore } from './cache-store.ts';
+import { buildVariables, PRICE_QUERY } from './query.ts';
 
 interface TibberGraphQlResponse {
   data?: {
@@ -45,12 +45,12 @@ export class TibberPriceClient {
   async getTimeline(now: Date = new Date()): Promise<PriceTimeline> {
     const cacheKey = this.buildCacheKey(now);
     const fromMemory = this.memoryCache.get(cacheKey);
-    if (fromMemory) {
+    if (fromMemory && this.timelineHasCurrentCoverage(fromMemory, now)) {
       return fromMemory;
     }
 
     const fromFile = await this.fileCache.read(cacheKey);
-    if (fromFile) {
+    if (fromFile && this.timelineHasCurrentCoverage(fromFile, now)) {
       this.memoryCache.set(cacheKey, fromFile);
       return fromFile;
     }
@@ -89,7 +89,11 @@ export class TibberPriceClient {
   }
 
   private buildCacheKey(now: Date): string {
-    const day = now.toISOString().slice(0, 10);
+    const day = [
+      now.getFullYear(),
+      `${now.getMonth() + 1}`.padStart(2, '0'),
+      `${now.getDate()}`.padStart(2, '0'),
+    ].join('-');
     return `${day}-${this.config.priceResolution}`;
   }
 
@@ -101,6 +105,7 @@ export class TibberPriceClient {
         Authorization: `Bearer ${this.config.accessToken}`,
         'User-Agent': 'homebridge-tibber-price-next/0.1.0',
       },
+      signal: AbortSignal.timeout(20_000),
       body: JSON.stringify({
         query: PRICE_QUERY,
         variables: buildVariables(this.config.priceResolution),
@@ -108,7 +113,8 @@ export class TibberPriceClient {
     });
 
     if (!response.ok) {
-      throw new Error(`Tibber API Fehler ${response.status}`);
+      const body = await response.text().catch(() => '');
+      throw new Error(`Tibber API Fehler ${response.status}${body ? `: ${body}` : ''}`);
     }
 
     const body = await response.json() as TibberGraphQlResponse;
@@ -121,7 +127,7 @@ export class TibberPriceClient {
     const priceInfo = home.currentSubscription?.priceInfo;
 
     if (!priceInfo) {
-      throw new Error('Tibber priceInfo fehlt in der Antwort');
+      throw new Error(`Tibber priceInfo fehlt in der Antwort${home.currentSubscription?.status ? ` (subscription status: ${home.currentSubscription.status})` : ''}`);
     }
 
     this.homeId = home.id;
@@ -151,5 +157,14 @@ export class TibberPriceClient {
     }
 
     return home;
+  }
+
+  private timelineHasCurrentCoverage(timeline: PriceTimeline, now: Date): boolean {
+    if (timeline.current) {
+      return true;
+    }
+
+    const today = normalizeSlots(timeline.today, this.config.priceMode, this.config.priceResolution);
+    return findSlotForInstant(today, now) !== null;
   }
 }

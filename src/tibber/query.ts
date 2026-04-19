@@ -1,4 +1,4 @@
-import { TibberPriceResolution } from '../config/types';
+import { TibberPriceResolution } from '../config/types.ts';
 
 export const PRICE_QUERY = `
   query GetPriceInfo($resolution: PriceInfoResolution) {

@@ -1,4 +1,4 @@
-import { TibberPriceMode, TibberPriceResolution } from '../config/types';
+import { TibberPriceMode, TibberPriceResolution } from '../config/types.ts';
 
 export interface PriceSlot {
   startsAt: string;
@@ -97,4 +97,3 @@ export function formatChartLabel(slot: ValuedPriceSlot): string {
   const minutes = slot.startsAtDate.getMinutes().toString().padStart(2, '0');
   return `${hours}:${minutes}`;
 }
-

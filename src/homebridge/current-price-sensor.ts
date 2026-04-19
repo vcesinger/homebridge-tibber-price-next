@@ -1,6 +1,6 @@
 import { PlatformAccessory, Service } from 'homebridge';
-import { AccessoryBase } from './accessory-base';
-import { TibberPriceNextPlatform } from './platform';
+import { AccessoryBase } from './accessory-base.ts';
+import { TibberPriceNextPlatform } from './platform.ts';
 
 export class CurrentPriceSensor extends AccessoryBase {
   private readonly service: Service;

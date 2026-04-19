@@ -9,6 +9,17 @@ Neuaufbau des bestehenden Plugins mit einer Architektur, die nicht mehr davon au
 - API-Integration, Homebridge-Zubehoer und Charting sauber trennen
 - spaetere Erweiterungen wie "beste Zeitfenster" oder Preisstufen leicht machen
 
+## Laufzeitstatus
+
+Das Repository ist als lauffaehiges Plugin vorbereitet:
+
+- `package.json` zeigt auf [dist/index.js](/Users/volkercesinger/Downloads/homebridge-tibber-price-1.1.0/homebridge-tibber-price-next/dist/index.js)
+- die auslieferbare Runtime liegt in `dist/` als CommonJS
+- die TypeScript-Dateien unter `src/` bleiben die lesbare Quellbasis fuer die Weiterentwicklung
+- `node --test test/*.test.cjs` laeuft lokal gruen fuer die Kernberechnungen
+
+Solange wir hier keinen Paketmanager in der Umgebung haben, wird `dist/` bewusst mitversioniert.
+
 ## Enthaltene Funktionen
 
 - aktueller Preis als Light Sensor
@@ -43,8 +54,23 @@ Quelle:
 - [Tibber GraphQL Schema Reference](https://developer.tibber.com/docs/reference)
 - Direkt geladene Referenzdatei: [reference.md](https://developer.tibber.com/api/reference.md)
 
+## Beispielkonfiguration
+
+```json
+{
+  "platform": "HomebridgeTibberPriceNext",
+  "accessToken": "TIBBER_TOKEN",
+  "priceResolution": "QUARTER_HOURLY",
+  "priceMode": "TOTAL",
+  "activatePriceSensor": true,
+  "activateRelativePriceSensor": true,
+  "activateGaugePriceSensor": true,
+  "activatePriceGraphing": true
+}
+```
+
 ## Offene Punkte
 
 - die exakte Tibber-GraphQL-Antwort sollte einmal live gegen einen echten Token verifiziert werden
-- fuer Publishing fehlen noch CI, Tests und Paket-Metadaten
+- fuer Publishing fehlen noch CI, erweiterte Integrationstests und Paket-Metadaten
 - optional kann spaeter ein eigener Renderer statt QuickChart gebaut werden

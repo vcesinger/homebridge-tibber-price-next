@@ -1,5 +1,5 @@
 import { HAPStatus, PlatformAccessory, Service } from 'homebridge';
-import { TibberPriceNextPlatform } from './platform';
+import { TibberPriceNextPlatform } from './platform.ts';
 
 export abstract class AccessoryBase {
   protected constructor(
@@ -27,4 +27,3 @@ export abstract class AccessoryBase {
 
   abstract refresh(): Promise<void>;
 }
-

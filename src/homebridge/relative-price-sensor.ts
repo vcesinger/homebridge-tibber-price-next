@@ -1,7 +1,7 @@
 import { PlatformAccessory, Service } from 'homebridge';
-import { calculateGaugePercent, calculateRelativePercent } from '../domain/price-slot';
-import { AccessoryBase } from './accessory-base';
-import { TibberPriceNextPlatform } from './platform';
+import { calculateGaugePercent, calculateRelativePercent } from '../domain/price-slot.ts';
+import { AccessoryBase } from './accessory-base.ts';
+import { TibberPriceNextPlatform } from './platform.ts';
 
 export class RelativePriceSensor extends AccessoryBase {
   private readonly service: Service;
@@ -46,4 +46,3 @@ export class RelativePriceSensor extends AccessoryBase {
       : calculateRelativePercent(todaySlots, current);
   }
 }
-

@@ -1,6 +1,6 @@
 import { dirname } from 'node:path';
 import { mkdir, writeFile } from 'node:fs/promises';
-import { ValuedPriceSlot, formatChartLabel } from '../domain/price-slot';
+import { ValuedPriceSlot, formatChartLabel } from '../domain/price-slot.ts';
 
 export class QuickChartRenderer {
   constructor(private readonly outputFile: string) {}
@@ -44,6 +44,7 @@ export class QuickChartRenderer {
       headers: {
         'Content-Type': 'application/json',
       },
+      signal: AbortSignal.timeout(20_000),
       body: JSON.stringify({
         width: 1280,
         height: 720,
@@ -61,4 +62,3 @@ export class QuickChartRenderer {
     await writeFile(this.outputFile, Buffer.from(arrayBuffer));
   }
 }
-

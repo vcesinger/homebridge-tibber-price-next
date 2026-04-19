@@ -8,13 +8,13 @@ import {
   Service,
 } from 'homebridge';
 import path from 'node:path';
-import { parseConfig } from '../config/parseConfig';
-import { PluginConfig } from '../config/types';
-import { QuickChartRenderer } from '../charting/quick-chart';
-import { TibberPriceClient } from '../tibber/client';
-import { CurrentPriceSensor } from './current-price-sensor';
-import { RelativePriceSensor } from './relative-price-sensor';
-import { PLATFORM_NAME, PLUGIN_NAME } from '../settings';
+import { parseConfig } from '../config/parseConfig.ts';
+import { PluginConfig } from '../config/types.ts';
+import { QuickChartRenderer } from '../charting/quick-chart.ts';
+import { TibberPriceClient } from '../tibber/client.ts';
+import { CurrentPriceSensor } from './current-price-sensor.ts';
+import { RelativePriceSensor } from './relative-price-sensor.ts';
+import { PLATFORM_NAME, PLUGIN_NAME } from '../settings.ts';
 
 interface Refreshable {
   refresh(): Promise<void>;
@@ -34,7 +34,14 @@ export class TibberPriceNextPlatform implements DynamicPlatformPlugin {
     public readonly config: PlatformConfig,
     public readonly api: API,
   ) {
-    this.parsedConfig = parseConfig(config);
+    try {
+      this.parsedConfig = parseConfig(config);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      this.log.error(`Ungueltige Konfiguration: ${message}`);
+      throw error;
+    }
+
     this.priceClient = new TibberPriceClient(log, api.user.storagePath(), this.parsedConfig);
     this.chartRenderer = new QuickChartRenderer(this.resolveChartOutputFile());
 
@@ -48,10 +55,14 @@ export class TibberPriceNextPlatform implements DynamicPlatformPlugin {
   }
 
   private async bootstrap(): Promise<void> {
-    await this.priceClient.init();
-    this.registerAccessories();
-    this.startPolling();
-    await this.runBackgroundRefresh();
+    try {
+      await this.priceClient.init();
+      this.registerAccessories();
+      this.startPolling();
+      await this.runBackgroundRefresh();
+    } catch (error) {
+      this.log.error(`Bootstrap fehlgeschlagen: ${error instanceof Error ? error.message : String(error)}`);
+    }
   }
 
   private registerAccessories(): void {

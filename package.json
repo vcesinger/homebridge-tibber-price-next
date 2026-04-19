@@ -6,15 +6,20 @@
   "license": "MIT",
   "type": "commonjs",
   "main": "dist/index.js",
+  "files": [
+    "dist",
+    "src",
+    "config.schema.json",
+    "README.md"
+  ],
   "engines": {
     "node": ">=20",
     "homebridge": ">=1.8.0"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "clean": "rimraf dist",
-    "lint": "eslint \"src/**/*.ts\"",
-    "prepare": "npm run clean && npm run build"
+    "build": "node scripts/prepare.mjs",
+    "prepare": "node scripts/prepare.mjs",
+    "test": "node --test test/*.test.cjs"
   },
   "keywords": [
     "homebridge-plugin",
@@ -26,12 +31,6 @@
     "homebridge": "^1.8.0"
   },
   "devDependencies": {
-    "@types/node": "^22.15.0",
-    "@typescript-eslint/eslint-plugin": "^8.30.0",
-    "@typescript-eslint/parser": "^8.30.0",
-    "eslint": "^9.25.0",
-    "rimraf": "^6.0.1",
-    "typescript": "^5.8.3"
+    "@types/node": "^22.15.0"
   }
 }
-

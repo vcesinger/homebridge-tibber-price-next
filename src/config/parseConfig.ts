@@ -1,5 +1,5 @@
 import { PlatformConfig } from 'homebridge';
-import { PluginConfig, TibberPriceMode, TibberPriceResolution } from './types';
+import { PluginConfig, TibberPriceMode, TibberPriceResolution } from './types.ts';
 
 const DEFAULT_CONFIG: Omit<PluginConfig, 'accessToken' | 'homeId'> = {
   priceMode: 'TOTAL',
@@ -46,4 +46,3 @@ export function parseConfig(config: PlatformConfig): PluginConfig {
       : DEFAULT_CONFIG.refreshIntervalSeconds,
   };
 }
-

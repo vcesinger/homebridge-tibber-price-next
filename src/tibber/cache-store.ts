@@ -1,6 +1,6 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { PriceTimeline } from '../domain/price-slot';
+import { PriceTimeline } from '../domain/price-slot.ts';
 
 interface PersistedTimeline {
   fetchedAt: string;
@@ -39,4 +39,3 @@ export class PriceCacheStore {
     return path.join(this.basePath, `${key}.json`);
   }
 }
-
