@@ -1,0 +1,83 @@
+{
+  "pluginAlias": "HomebridgeTibberPriceNext",
+  "pluginType": "platform",
+  "singular": true,
+  "headerDisplay": "Gib deinen Tibber Access Token an. Dieses Reboot-Projekt ist auf flexible Preisintervalle vorbereitet.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "accessToken": {
+        "title": "Tibber Access Token",
+        "type": "string",
+        "required": true
+      },
+      "homeId": {
+        "title": "Tibber Home ID",
+        "type": "string",
+        "required": false
+      },
+      "priceMode": {
+        "title": "Preisberechnung",
+        "type": "string",
+        "default": "TOTAL",
+        "oneOf": [
+          {
+            "title": "Brutto / total",
+            "enum": ["TOTAL"]
+          },
+          {
+            "title": "Netto ohne Steuer",
+            "enum": ["ENERGY"]
+          }
+        ]
+      },
+      "priceResolution": {
+        "title": "Preisauflösung",
+        "type": "string",
+        "default": "QUARTER_HOURLY",
+        "oneOf": [
+          {
+            "title": "15 Minuten",
+            "enum": ["QUARTER_HOURLY"]
+          },
+          {
+            "title": "60 Minuten",
+            "enum": ["HOURLY"]
+          }
+        ]
+      },
+      "activatePriceSensor": {
+        "title": "Aktueller Preis-Sensor",
+        "type": "boolean",
+        "default": true
+      },
+      "activateRelativePriceSensor": {
+        "title": "Relativer Preis-Sensor",
+        "type": "boolean",
+        "default": true
+      },
+      "activateGaugePriceSensor": {
+        "title": "Gauge Preis-Sensor",
+        "type": "boolean",
+        "default": true
+      },
+      "activatePriceGraphing": {
+        "title": "Preis-Chart generieren",
+        "type": "boolean",
+        "default": true
+      },
+      "chartOutputFile": {
+        "title": "Chart-Datei",
+        "type": "string",
+        "default": ".homebridge/tibber-price-next/price-chart.png"
+      },
+      "refreshIntervalSeconds": {
+        "title": "Polling-Intervall in Sekunden",
+        "type": "integer",
+        "default": 60,
+        "minimum": 15
+      }
+    }
+  }
+}
+
